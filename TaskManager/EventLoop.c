@@ -31,32 +31,35 @@ void addEvent(Event event) {
     }
 }
 
-void setInterval(calback calback, long interval) {
+Event setInterval(calback calback, long interval) {
     Event event = Event_interval(randomEventId(), interval, calback);
     addEvent(event);
+    return event;
 }
 
-void setTimeout(calback calback, long after) {
+Event setTimeout(calback calback, long after) {
     Event event = Event_after(randomEventId(), after, calback);
     addEvent(event);
+    return event;
 }
 
-void emit(long id, void* value,...){
+Event setImmedate(calback calback){
+    Event event = Event_after(randomEventId(), 0, calback);
+    addEvent(event);
+    return event;
+}
+
+void emit(long id, void* value,...) {
     for (int i = 0; i <= _eventLastIndex; i++) {
-        if (_events[i].id == id && _events[i].lisen_calback != NULL) {
-            _events[i].lisen_calback(id, value);
+        if (_events[i].id == id && _events[i].selector != NULL) {
+            _events[i].selector(id, value);
             break;
         }
     }
 }
 
-void linsen(long id, lisen_calback value) {
+void listenEvent(long id, selector value) {
     Event event = Event_listen(id, value);
-    addEvent(event);
-}
-
-void setImmedate(calback calback){
-    Event event = Event_after(randomEventId(), 0, calback);
     addEvent(event);
 }
 
@@ -178,7 +181,7 @@ int max() {
 EventLoop EventLoop_init() {
     shared = malloc(sizeof(EventLoop));
     shared->add = &addEvent;
-    shared->execute = &startLoop;
+    shared->loop = &startLoop;
     shared->exit = &stopLoop;
     shared->remove = &removeEvent;
     shared->count = &count;
@@ -187,7 +190,7 @@ EventLoop EventLoop_init() {
     shared->setTimeout = &setTimeout;
     shared->setImmedate = &setImmedate;
     shared->emit = &emit;
-    shared->linsen = &linsen;
+    shared->listen = &listenEvent;
     return *shared;
 }
 

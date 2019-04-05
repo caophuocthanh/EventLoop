@@ -32,7 +32,7 @@ Event Event_after(long id, long afterTime, calback calback) {
     return event;
 }
 
-Event Event_listen(long id, lisen_calback calback){
+Event Event_listen(long id, selector selector){
     Event event;
     event.id = id;
     event.loop = 0;
@@ -41,7 +41,7 @@ Event Event_listen(long id, lisen_calback calback){
     event.is_done = 0;
     event.beginTime = clock();
     event.priority = 1;
-    event.lisen_calback = calback;
+    event.selector = selector;
     return event;
 }
 

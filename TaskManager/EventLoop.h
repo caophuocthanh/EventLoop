@@ -14,17 +14,17 @@
 #include <unistd.h>
 #include "Event.h"
 
-typedef void (*lisen_calback)(long, void*,...);
+typedef void (*selector)(long, void*,...);
 
 typedef struct EventLoop {
-    void (*setInterval)(calback, long);
-    void (*setTimeout)(calback, long);
-    void (*setImmedate)(calback);
+    Event (*setInterval)(calback, long);
+    Event (*setTimeout)(calback, long);
+    Event (*setImmedate)(calback);
     void (*emit)(long, void*,...);
-    void (*linsen)(long, lisen_calback);
+    void (*listen)(long, selector);
     void (*add)(Event);
     void (*remove)(long);
-    void (*execute)(void);
+    void (*loop)(void);
     void (*exit)(void);
     int (*count)(void);
     int (*max)(void);

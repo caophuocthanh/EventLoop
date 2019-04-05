@@ -14,7 +14,7 @@
 #include <time.h>
 
 typedef void (*calback)(long);
-typedef void (*lisen_calback)(long, void*,...);
+typedef void (*selector)(long, void*,...);
 
 typedef struct Event {
     long id;
@@ -24,11 +24,11 @@ typedef struct Event {
     int priority;
     clock_t beginTime;
     void (*calback)(long);
-    void (*lisen_calback)(long, void*,...);
+    void (*selector)(long, void*,...);
 } Event;
 
 Event Event_interval(long id, long interval, calback calback);
 Event Event_after(long id, long afterTime, calback calback);
-Event Event_listen(long id, lisen_calback calback);
+Event Event_listen(long id, selector selector);
 
 #endif /* Task_h */

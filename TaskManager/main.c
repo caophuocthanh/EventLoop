@@ -53,7 +53,7 @@ void calbackUUUUU(long i, char* va, char* vb, int *iii) {
 }
 
 int main(int argc, const char * argv[]) {
-    
+    // add Tasks
     EventShared().setImmedate(calbackTaskA);
     EventShared().setInterval(calbackTaskB, 5*1000);
     EventShared().setTimeout(calbackTaskB, 10*1000);
@@ -61,9 +61,10 @@ int main(int argc, const char * argv[]) {
     EventShared().setTimeout(calbackTaskA, 2*1000);
     EventShared().setTimeout(calbackTaskB, 2*1000);
     EventShared().setInterval(calbackTaskC, 2*1000);
-    EventShared().linsen(4555, calbackUUUUU);
-    EventShared().execute();
+    EventShared().listen(4555, calbackUUUUU);
+    
+    // run loop
+    EventShared().loop();
 
-    // start loop
     return 0;
 }
